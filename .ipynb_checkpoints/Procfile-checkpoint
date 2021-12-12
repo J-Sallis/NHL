@@ -1,1 +1,1 @@
-web: gunicorn app:server
+web: gunicorn NHL_APP:server
