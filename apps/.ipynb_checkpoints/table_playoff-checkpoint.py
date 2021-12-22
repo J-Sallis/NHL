@@ -5,12 +5,17 @@ from dash_table import DataTable, FormatTemplate
 from dash import html
 import pathlib
 from dash import dcc
-
+from app import app
+from dash.dependencies import Input, Output
+import plotly.graph_objects as go
+import plotly.io as pio
+pio.templates.default = "plotly_dark"
 
 PATH = pathlib.Path(__file__).parent
 DATA_PATH = PATH.joinpath("../datasets").resolve()
 cup_df = pd.read_pickle(DATA_PATH.joinpath("playoffs_table.pkl"))
-NHL_violin = pd.read_pickle(DATA_PATH.joinpath('NHL_violin.pkl'))
+NHL_violin = pd.read_pickle(DATA_PATH.joinpath("NHL_violin.pkl"))
+
 percentage = FormatTemplate.percentage(2)
 
 layout = dbc.Container(
@@ -102,8 +107,7 @@ layout = dbc.Container(
                             sort_action="native",
                         )
                     ],
-                    width={"size": 6},
-                ),
+                    width={"size": 6}),
                 dbc.Col([
     dcc.RadioItems(id='violin_CL',
         options=[
@@ -119,15 +123,14 @@ layout = dbc.Container(
     ],
     fluid=True,
 )
-
+@app.callback(
+    Output(component_id='violin', component_property='figure'),
+    [Input(component_id='violin_CL', component_property='value')]
+)
 def update_graph(violin_CL):
     dff = NHL_violin
     fig = go.Figure()
-    fig.add_trace(go.Violin(y=dff[violin_CL].loc[dff['playoffGame'] == 0],box_visible=True, line_color='pink',
-                               meanline_visible=True, fillcolor='darkred', opacity=0.5,
-                    x0='Regular'))
-    fig.add_trace(go.Violin(y=dff[violin_CL].loc[dff['playoffGame'] == 1], box_visible=True, line_color='pink',
-                               meanline_visible=True, fillcolor='darkred', opacity=0.5,
-                    x0='Playoffs'))
+    fig.add_trace(go.Violin(y=dff[violin_CL].loc[dff['playoffGame'] == 0],box_visible=True, line_color='pink', meanline_visible=True, fillcolor='darkred', opacity=0.5,x0='Regular'))
+    fig.add_trace(go.Violin(y=dff[violin_CL].loc[dff['playoffGame'] == 1], box_visible=True, line_color='pink',meanline_visible=True, fillcolor='darkred', opacity=0.5, x0='Playoffs'))
     fig.update_layout(yaxis=dict(title=violin_CL,nticks = 12),xaxis=dict(title='Season'),title= violin_CL + ' Reg vs Playoffs',title_x=0.5,width=800,height=400,showlegend=False)
     return fig
