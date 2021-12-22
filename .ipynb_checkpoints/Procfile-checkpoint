@@ -1,1 +1,0 @@
-web: gunicorn NHL_APP-working:server
