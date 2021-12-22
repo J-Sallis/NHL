@@ -9,7 +9,7 @@ import pathlib
 PATH = pathlib.Path(__file__).parent
 DATA_PATH = PATH.joinpath("../datasets").resolve()
 cup_df = pd.read_pickle(DATA_PATH.joinpath("playoffs_table.pkl"))
-
+NHL_violin = pd.read_pickle(DATA_PATH.joinpath('NHL_violin.pkl'))
 percentage = FormatTemplate.percentage(2)
 
 layout = dbc.Container(
@@ -102,9 +102,31 @@ layout = dbc.Container(
                         )
                     ],
                     width={"size": 6},
-                )
+                ),
+                dbc.Col([
+    dcc.RadioItems(id='violin_CL',
+        options=[
+            {'label': 'Hits', 'value': 'hitsFor'},
+            {'label': 'Goals', 'value': 'goalsFor'},
+            
+        ],
+        value='hitsFor'
+    ),dcc.Graph(id="violin")
+],width={'size':6})
             ]
         ),
     ],
     fluid=True,
 )
+
+def update_graph(violin_CL):
+    dff = NHL_violin
+    fig = go.Figure()
+    fig.add_trace(go.Violin(y=dff[violin_CL].loc[dff['playoffGame'] == 0],box_visible=True, line_color='pink',
+                               meanline_visible=True, fillcolor='darkred', opacity=0.5,
+                    x0='Regular'))
+    fig.add_trace(go.Violin(y=dff[violin_CL].loc[dff['playoffGame'] == 1], box_visible=True, line_color='pink',
+                               meanline_visible=True, fillcolor='darkred', opacity=0.5,
+                    x0='Playoffs'))
+    fig.update_layout(yaxis=dict(title=violin_CL,nticks = 12),xaxis=dict(title='Season'),title= violin_CL + ' Reg vs Playoffs',title_x=0.5,width=800,height=400,showlegend=False)
+    return fig
