@@ -4,6 +4,7 @@ from dash import dash_table
 from dash_table import DataTable, FormatTemplate
 from dash import html
 import pathlib
+from dash import dcc
 
 
 PATH = pathlib.Path(__file__).parent
