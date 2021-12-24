@@ -107,8 +107,13 @@ layout = dbc.Container(
                             sort_action="native",
                         )
                     ],
-                    width={"size": 6}),
-                dbc.Col([
+                    width={"size": 6},align='end'),
+                dbc.Col([dbc.Button(
+    "What is a violin chart?",
+    id="link-centered", 
+    className="ml-auto",
+    href='https://chartio.com/learn/charts/violin-plot-complete-guide',color='secondary'
+),
     dcc.RadioItems(id='violin_CL',
         options=[
             {'label': 'Hits', 'value': 'hitsFor'},
@@ -117,7 +122,7 @@ layout = dbc.Container(
         ],
         value='hitsFor'
     ),dcc.Graph(id="violin")
-],width={'size':6})
+],width={'size':6},align='end')
             ]
         ),
     ],
