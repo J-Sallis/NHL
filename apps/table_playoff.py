@@ -109,7 +109,7 @@ layout = dbc.Container(
                     ],
                     width={"size": 6},align='end'),
                 dbc.Col([dbc.Button(
-    "What is a violin chart?",
+    "What is a violin plot?",
     id="link-centered", 
     className="ml-auto",
     href='https://chartio.com/learn/charts/violin-plot-complete-guide',color='secondary'
