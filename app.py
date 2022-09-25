@@ -1,5 +1,5 @@
-from jupyter_dash import JupyterDash
+from dash import Dash
 import dash_bootstrap_components as dbc
 
-app = JupyterDash(__name__, external_stylesheets=[dbc.themes.CYBORG])
+app = Dash(__name__, external_stylesheets=[dbc.themes.CYBORG])
 server = app.server

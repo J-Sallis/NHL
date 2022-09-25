@@ -6,7 +6,7 @@ from dash.dependencies import Input, Output
 pio.templates.default = "plotly_dark"
 import dash_bootstrap_components as dbc
 import pathlib
-from jupyter_dash import JupyterDash
+# from jupyter_dash import JupyterDash
 import plotly.express as px
 from app import app
 
