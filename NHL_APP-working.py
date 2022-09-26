@@ -1,3 +1,5 @@
+from distutils.log import debug
+from pickle import TRUE
 import pandas as pd
 from dash import dcc
 from dash import html
@@ -24,4 +26,4 @@ app.layout = dbc.Container([
 ], fluid=True)
 
 if __name__ == '__main__':
-    app.run_server()
+    app.run(debug=True)

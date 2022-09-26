@@ -5,7 +5,6 @@ import plotly.express as px
 import plotly.io as pio
 import plotly.graph_objects as go
 from dash.dependencies import Input, Output
-
 pio.templates.default = "plotly_dark"
 import dash_bootstrap_components as dbc
 from app import app
